@@ -1,0 +1,42 @@
+<div class="container mt-4">
+  <h2>Registro de Contenedor IoT</h2>
+  <p class="text-muted">Haz clic en el mapa para seleccionar la ubicación exacta del contenedor.</p>
+
+  <!-- Alertas -->
+  <div *ngIf="mensaje" class="alert alert-success">{{ mensaje }}</div>
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+  <div class="row">
+    <!-- Formulario -->
+    <div class="col-md-5">
+      <div class="card">
+        <div class="card-body">
+          <div class="mb-3">
+            <label class="form-label">Dirección MAC</label>
+            <input type="text" class="form-control" [(ngModel)]="nuevoContenedor.mac" placeholder="Ej: AA:BB:CC:DD:EE:FF">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Capacidad (Litros)</label>
+            <input type="number" class="form-control" [(ngModel)]="nuevoContenedor.capacidad">
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <label class="form-label">Latitud</label>
+              <input type="text" class="form-control" [value]="nuevoContenedor.latitud | number:'1.6-6'" readonly>
+            </div>
+            <div class="col-6">
+              <label class="form-label">Longitud</label>
+              <input type="text" class="form-control" [value]="nuevoContenedor.longitud | number:'1.6-6'" readonly>
+            </div>
+          </div>
+          <button class="btn btn-primary w-100 mt-4" (click)="onSubmit()">Guardar Contenedor</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mapa -->
+    <div class="col-md-7">
+      <div id="map" style="height: 500px; width: 100%; border-radius: 8px;"></div>
+    </div>
+  </div>
+</div>
