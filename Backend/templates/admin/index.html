@@ -1,0 +1,96 @@
+<div class="eco-dash">
+
+    <header class="eco-hero">
+        <div>
+            <p class="eco-eyebrow">Huánuco · {% now "l j \d\e F, H:i" %}</p>
+            <h1 class="eco-hero__title">Estado de la recolección</h1>
+            <p class="eco-hero__sub">Lecturas de los sensores IoT y rutas de recolección optimizadas.</p>
+        </div>
+        <div class="eco-hero__actions">
+            <a class="eco-btn eco-btn--ghost" href="/api/docs/" target="_blank" rel="noopener">
+                <span class="material-symbols-outlined">api</span>Documentación API
+            </a>
+            <a class="eco-btn" href="{% url 'admin:rutas_planrecoleccion_generar' %}">
+                <span class="material-symbols-outlined">route</span>Generar plan de rutas
+            </a>
+        </div>
+    </header>
+
+    <section class="eco-kpis">
+        {% for kpi in kpis %}
+            <article class="eco-kpi eco-kpi--{{ kpi.tono }}">
+                <div class="eco-kpi__icon"><span class="material-symbols-outlined">{{ kpi.icono }}</span></div>
+                <p class="eco-kpi__label">{{ kpi.titulo }}</p>
+                <p class="eco-kpi__value">{{ kpi.valor }}</p>
+                <p class="eco-kpi__detail">{{ kpi.detalle }}</p>
+            </article>
+        {% endfor %}
+    </section>
+
+    <section class="eco-grid">
+        <article class="eco-card eco-card--wide">
+            <header class="eco-card__head">
+                <h2>Contenedores por recoger</h2>
+                <a href="{% url 'admin:monitoreo_contenedor_changelist' %}?semaforo=rojo">Ver todos →</a>
+            </header>
+            {% if criticos %}
+                <ul class="eco-list">
+                    {% for c in criticos %}
+                        <li class="eco-list__item">
+                            <div class="eco-list__main">
+                                <a class="eco-list__code" href="{% url 'admin:monitoreo_contenedor_change' c.pk %}">{{ c.codigo }}</a>
+                                <span class="eco-list__name">{{ c.nombre }}</span>
+                                <span class="eco-list__meta">{{ c.sector|default:"—" }} · {{ c.capacidad_litros }} L</span>
+                            </div>
+                            <div class="eco-meter eco-meter--rojo" title="{{ c.nivel_actual_pct|floatformat:0 }} %">
+                                <span style="width: {{ c.nivel_actual_pct|floatformat:0 }}%"></span>
+                            </div>
+                            <strong class="eco-list__pct">{{ c.nivel_actual_pct|floatformat:0 }} %</strong>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <div class="eco-empty">
+                    <span class="material-symbols-outlined">check_circle</span>
+                    <p>Ningún contenedor supera el {{ umbral }} %. No hace falta salir a recoger por ahora.</p>
+                </div>
+            {% endif %}
+        </article>
+
+        <article class="eco-card">
+            <header class="eco-card__head"><h2>Semáforo de llenado</h2></header>
+            <div class="eco-stack">
+                {% for s in semaforo %}
+                    {% if s.pct %}<span class="eco-stack__seg eco-stack__seg--{{ s.clase }}" style="width: {{ s.pct }}%"></span>{% endif %}
+                {% endfor %}
+            </div>
+            <ul class="eco-legend">
+                {% for s in semaforo %}
+                    <li><i class="eco-dot eco-dot--{{ s.clase }}"></i>{{ s.nombre }}<b>{{ s.total }}</b></li>
+                {% endfor %}
+            </ul>
+
+            <header class="eco-card__head eco-card__head--sep"><h2>Último plan de recolección</h2></header>
+            {% if ultimo_plan %}
+                <dl class="eco-facts">
+                    <div><dt>Generado</dt><dd>{{ ultimo_plan.creado_en|date:"d/m H:i" }}</dd></div>
+                    <div><dt>Contenedores</dt><dd>{{ ultimo_plan.contenedores_atendidos }}</dd></div>
+                    <div><dt>Distancia</dt><dd>{{ ultimo_plan_km }} km</dd></div>
+                    <div><dt>Ahorro vs. base</dt><dd class="eco-up">{{ ultimo_plan.mejora_pct|default:"0" }} %</dd></div>
+                </dl>
+                <a class="eco-link" href="{% url 'admin:rutas_planrecoleccion_change' ultimo_plan.pk %}">Ver itinerarios →</a>
+            {% else %}
+                <p class="eco-muted">Aún no se ha generado ningún plan.</p>
+            {% endif %}
+        </article>
+
+        <article class="eco-card eco-card--full">
+            <header class="eco-card__head">
+                <h2>Lecturas recibidas · últimas 24 h</h2>
+                <a href="{% url 'admin:monitoreo_lectura_changelist' %}">Ver lecturas →</a>
+            </header>
+            {% component "unfold/components/chart/bar.html" with data=grafico_lecturas height=90 %}{% endcomponent %}
+        </article>
+    </section>
+</div>
+{% endblock %}

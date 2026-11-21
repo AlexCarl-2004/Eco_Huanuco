@@ -1,0 +1,158 @@
+/* =====================================================================
+   EcoHuánuco AI · estilos del panel de administración (sobre Unfold)
+   ===================================================================== */
+
+:root {
+  --eco-bg: #ffffff;
+  --eco-surface: #f8faf9;
+  --eco-border: #e4e9e7;
+  --eco-text: #0f1a16;
+  --eco-muted: #5f6f69;
+  --eco-green: #10b981;
+  --eco-green-ink: #047857;
+  --eco-amber: #f59e0b;
+  --eco-amber-ink: #b45309;
+  --eco-red: #ef4444;
+  --eco-red-ink: #b91c1c;
+  --eco-gray: #a3aeaa;
+  --eco-radius: 10px;
+}
+
+html.dark {
+  --eco-bg: #0f1513;
+  --eco-surface: #141c19;
+  --eco-border: #23302b;
+  --eco-text: #eef4f1;
+  --eco-muted: #8fa19a;
+  --eco-green-ink: #34d399;
+  --eco-amber-ink: #fbbf24;
+  --eco-red-ink: #f87171;
+}
+
+.eco-dash { display: flex; flex-direction: column; gap: 24px; color: var(--eco-text); }
+
+/* ---------- Encabezado ---------- */
+.eco-hero {
+  display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px;
+  padding: 28px 28px 24px;
+  border: 1px solid var(--eco-border);
+  border-radius: calc(var(--eco-radius) + 4px);
+  background:
+    radial-gradient(600px 200px at 100% 0%, rgba(16, 185, 129, .14), transparent 70%),
+    var(--eco-bg);
+}
+.eco-eyebrow { margin: 0 0 6px; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--eco-green-ink); font-weight: 600; }
+.eco-hero__title { margin: 0; font-size: 26px; line-height: 1.15; font-weight: 650; letter-spacing: -.02em; }
+.eco-hero__sub { margin: 6px 0 0; color: var(--eco-muted); font-size: 14px; }
+.eco-hero__actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.eco-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 36px; padding: 0 14px; border-radius: 8px;
+  background: var(--eco-green); color: #fff !important; font-weight: 600; font-size: 13px;
+  border: 1px solid transparent; text-decoration: none;
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+  box-shadow: 0 1px 0 rgba(255,255,255,.2) inset, 0 1px 2px rgba(4, 120, 87, .3);
+}
+.eco-btn:hover { background: #0ea371; transform: translateY(-1px); }
+.eco-btn:active { transform: translateY(0) scale(.98); }
+.eco-btn .material-symbols-outlined { font-size: 18px; }
+.eco-btn--ghost { background: var(--eco-bg); color: var(--eco-text) !important; border-color: var(--eco-border); box-shadow: none; }
+.eco-btn--ghost:hover { background: var(--eco-surface); }
+
+/* ---------- KPIs ---------- */
+.eco-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
+.eco-kpi {
+  position: relative; padding: 18px 18px 16px; border-radius: var(--eco-radius);
+  border: 1px solid var(--eco-border); background: var(--eco-bg);
+}
+.eco-kpi__icon {
+  position: absolute; top: 16px; right: 16px; width: 32px; height: 32px; border-radius: 8px;
+  display: grid; place-items: center; background: var(--eco-surface); color: var(--eco-muted);
+}
+.eco-kpi__icon .material-symbols-outlined { font-size: 18px; }
+.eco-kpi__label { margin: 0; font-size: 12.5px; color: var(--eco-muted); font-weight: 500; }
+.eco-kpi__value { margin: 10px 0 2px; font-size: 30px; font-weight: 650; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+.eco-kpi__detail { margin: 0; font-size: 12px; color: var(--eco-muted); }
+.eco-kpi--rojo .eco-kpi__icon { background: rgba(239, 68, 68, .12); color: var(--eco-red-ink); }
+.eco-kpi--rojo .eco-kpi__value { color: var(--eco-red-ink); }
+.eco-kpi--ambar .eco-kpi__icon { background: rgba(245, 158, 11, .14); color: var(--eco-amber-ink); }
+.eco-kpi--verde .eco-kpi__icon { background: rgba(16, 185, 129, .12); color: var(--eco-green-ink); }
+
+/* ---------- Tarjetas ---------- */
+.eco-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 12px; }
+@media (max-width: 1100px) { .eco-grid { grid-template-columns: 1fr; } }
+.eco-card { padding: 18px 20px; border: 1px solid var(--eco-border); border-radius: var(--eco-radius); background: var(--eco-bg); min-width: 0; }
+.eco-card--full { grid-column: 1 / -1; }
+.eco-card__head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 14px; }
+.eco-card__head h2 { margin: 0; font-size: 14px; font-weight: 600; }
+.eco-card__head a, .eco-link { font-size: 12.5px; color: var(--eco-green-ink); font-weight: 500; text-decoration: none; }
+.eco-card__head a:hover, .eco-link:hover { text-decoration: underline; }
+.eco-card__head--sep { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--eco-border); }
+.eco-muted { color: var(--eco-muted); font-size: 13px; margin: 0; }
+
+/* ---------- Lista de críticos ---------- */
+.eco-list { list-style: none; margin: 0; padding: 0; }
+.eco-list__item {
+  display: grid; grid-template-columns: minmax(0, 1fr) 160px 52px; align-items: center; gap: 16px;
+  padding: 10px 0; border-top: 1px solid var(--eco-border);
+}
+.eco-list__item:first-child { border-top: 0; padding-top: 0; }
+.eco-list__main { display: flex; align-items: baseline; gap: 10px; min-width: 0; }
+.eco-list__code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; font-weight: 600; color: var(--eco-text) !important; }
+.eco-list__name { font-size: 13.5px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.eco-list__meta { font-size: 12px; color: var(--eco-muted); white-space: nowrap; }
+.eco-list__pct { text-align: right; font-variant-numeric: tabular-nums; font-size: 13px; }
+
+/* ---------- Barra de nivel ---------- */
+.eco-meter { height: 6px; border-radius: 99px; background: var(--eco-surface); overflow: hidden; box-shadow: inset 0 0 0 1px var(--eco-border); }
+.eco-meter > span { display: block; height: 100%; border-radius: inherit; background: var(--eco-green); transition: width .6s cubic-bezier(.2, .8, .2, 1); }
+.eco-meter--ambar > span { background: var(--eco-amber); }
+.eco-meter--rojo > span { background: var(--eco-red); }
+.eco-meter--gris > span { background: var(--eco-gray); }
+
+.eco-nivel { display: inline-flex; align-items: center; gap: 10px; min-width: 150px; }
+.eco-nivel .eco-meter { flex: 1; }
+.eco-nivel b { font-variant-numeric: tabular-nums; font-size: 12.5px; min-width: 38px; text-align: right; }
+
+/* ---------- Semáforo ---------- */
+.eco-stack { display: flex; height: 10px; border-radius: 99px; overflow: hidden; background: var(--eco-surface); gap: 2px; }
+.eco-stack__seg { display: block; height: 100%; }
+.eco-stack__seg--verde, .eco-dot--verde { background: var(--eco-green); }
+.eco-stack__seg--ambar, .eco-dot--ambar { background: var(--eco-amber); }
+.eco-stack__seg--rojo, .eco-dot--rojo { background: var(--eco-red); }
+.eco-stack__seg--gris, .eco-dot--gris { background: var(--eco-gray); }
+.eco-legend { list-style: none; margin: 14px 0 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; font-size: 13px; }
+.eco-legend li { display: flex; align-items: center; gap: 8px; }
+.eco-legend b { margin-left: auto; font-variant-numeric: tabular-nums; }
+.eco-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; }
+
+/* ---------- Datos del último plan ---------- */
+.eco-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 0 0 14px; }
+.eco-facts dt { font-size: 12px; color: var(--eco-muted); }
+.eco-facts dd { margin: 2px 0 0; font-size: 18px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.eco-up { color: var(--eco-green-ink); }
+
+.eco-empty { display: flex; gap: 12px; align-items: center; padding: 18px; border-radius: 8px; background: var(--eco-surface); color: var(--eco-muted); font-size: 13.5px; }
+.eco-empty .material-symbols-outlined { color: var(--eco-green); }
+.eco-empty p { margin: 0; }
+
+/* ---------- Código de contenedor ---------- */
+.eco-codigo { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12.5px; font-weight: 600; white-space: nowrap; }
+
+/* ---------- Pastillas para listas del admin ---------- */
+.eco-pill { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; white-space: nowrap; }
+.eco-pill::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--eco-gray); }
+.eco-pill--on::before { background: var(--eco-green); box-shadow: 0 0 0 3px rgba(16, 185, 129, .18); }
+.eco-pill--off::before { background: var(--eco-red); }
+
+/* ---------- Tabla de paradas en el detalle del plan ---------- */
+.eco-ruta { width: 100%; border-collapse: collapse; font-size: 13px; }
+.eco-ruta th { text-align: left; font-weight: 600; color: var(--eco-muted); font-size: 12px; padding: 6px 10px; border-bottom: 1px solid var(--eco-border); }
+.eco-ruta td { padding: 7px 10px; border-bottom: 1px solid var(--eco-border); font-variant-numeric: tabular-nums; }
+.eco-ruta tr:last-child td { border-bottom: 0; }
+.eco-ruta__orden { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--eco-green); color: #fff; font-size: 11px; font-weight: 700; }
+
+@media (prefers-reduced-motion: reduce) {
+  .eco-btn, .eco-meter > span { transition: none; }
+}
