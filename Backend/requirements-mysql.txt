@@ -1,0 +1,3 @@
+-r requirements.txt
+# Driver de MySQL (sólo si DB_ENGINE=mysql)
+mysqlclient>=2.2.4

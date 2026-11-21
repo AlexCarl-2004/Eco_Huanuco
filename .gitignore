@@ -1,5 +1,31 @@
+# Dependencias
 node_modules/
 Frontend/node_modules/
 Backend/venv/
-Backend/db.sqlite3
+Backend/.venv/
+
+# Python
 Backend/**/__pycache__/
+*.pyc
+
+# Base de datos local (SQLite y sus archivos WAL)
+Backend/db.sqlite3
+Backend/db.sqlite3-wal
+Backend/db.sqlite3-shm
+
+# Configuración con secretos
+Backend/.env
+iot/firmware/sensor_contenedor/config.h
+iot/broker/passwd
+
+# Archivos generados
+Backend/staticfiles/
+reportes/
+**/reporte_calibracion.html
+**/resultados_calibracion.csv
+**/benchmark_rutas.html
+**/benchmark_rutas.csv
+
+# Editores / sistema
+.DS_Store
+Thumbs.db
