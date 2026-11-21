@@ -1,0 +1,21 @@
+# =====================================================================
+# EcoHuánuco AI · Lista de control de acceso de Mosquitto (ECO-5)
+# %u = nombre de usuario MQTT. Cada dispositivo usa su device_id como usuario.
+# =====================================================================
+
+# --- Backend Django (worker de telemetría) ---
+user backend
+topic read      ecohuanuco/v1/contenedores/+/telemetria
+topic read      ecohuanuco/v1/contenedores/+/estado
+topic readwrite ecohuanuco/v1/contenedores/+/config
+topic readwrite ecohuanuco/v1/sistema/#
+
+# --- Panel web (sólo lectura, vía WebSockets) ---
+user panel
+topic read ecohuanuco/v1/contenedores/+/telemetria
+topic read ecohuanuco/v1/contenedores/+/estado
+
+# --- Dispositivos: sólo pueden escribir en SUS tópicos ---
+pattern write ecohuanuco/v1/contenedores/%u/telemetria
+pattern write ecohuanuco/v1/contenedores/%u/estado
+pattern read  ecohuanuco/v1/contenedores/%u/config

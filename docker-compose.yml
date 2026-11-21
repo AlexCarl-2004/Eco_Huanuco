@@ -1,0 +1,42 @@
+# =====================================================================
+# EcoHuánuco AI · servicios de apoyo para desarrollo
+#
+#   docker compose up -d mosquitto            → sólo el broker MQTT
+#   docker compose --profile mysql up -d      → broker + MySQL 8
+#
+# El Backend (Django) y el Frontend (Angular) se ejecutan en local.
+# =====================================================================
+services:
+  mosquitto:
+    image: eclipse-mosquitto:2
+    container_name: ecohuanuco-mosquitto
+    restart: unless-stopped
+    ports:
+      - "1883:1883"   # MQTT
+      - "9001:9001"   # MQTT sobre WebSockets
+    volumes:
+      - ./iot/broker/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+      - ./iot/broker/acl:/mosquitto/config/acl:ro
+      - ./iot/broker/crear_usuarios.sh:/mosquitto/config/crear_usuarios.sh:ro
+      - mosquitto-data:/mosquitto/data
+
+  mysql:
+    image: mysql:8.4
+    container_name: ecohuanuco-mysql
+    profiles: ["mysql"]
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ecohuanuco
+      MYSQL_USER: ecohuanuco
+      MYSQL_PASSWORD: ecohuanuco
+      MYSQL_ROOT_PASSWORD: root
+      TZ: America/Lima
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_0900_ai_ci"]
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  mosquitto-data:
+  mysql-data:
