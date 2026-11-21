@@ -1,0 +1,10 @@
+<div class="semaforo-container">
+  <!-- El círculo de color -->
+  <div class="luz" [ngClass]="colorEstado"></div>
+  
+  <div class="info">
+    <strong>Nivel: {{ nivelLlenado }}%</strong>
+    <span>Batería: {{ bateria }}%</span>
+    <small class="estado-texto">{{ textoEstado }}</small>
+  </div>
+</div>

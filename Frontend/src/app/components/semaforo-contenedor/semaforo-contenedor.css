@@ -1,0 +1,31 @@
+.semaforo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.luz {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  box-shadow: 0 0 5px rgba(0,0,0,0.3);
+}
+
+/* Colores usando clases de Bootstrap (si lo tienes) o CSS puro */
+.bg-success { background-color: #28a745; }
+.bg-danger { background-color: #dc3545; }
+.bg-warning { background-color: #ffc107; }
+
+.info {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+}
+.estado-texto {
+  color: #666;
+  font-weight: bold;
+}

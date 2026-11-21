@@ -1,1 +1,22 @@
-<p>dashboard works!</p>
+<div class="container mt-4">
+  <h2>Panel de Contenedores (Telemetría en Vivo)</h2>
+  <p class="text-muted">Los datos se actualizan automáticamente cada 5 segundos.</p>
+
+  <div class="row mt-3">
+    <div class="col-md-4 mb-3" *ngFor="let c of contenedores">
+      <div class="card p-3 shadow-sm">
+        <h5 class="card-title mb-1">{{ c.mac }}</h5>
+        <small class="text-muted mb-3">Ubicación: {{ c.latitud | number:'1.4-4' }}, {{ c.longitud | number:'1.4-4' }}</small>
+        
+        <app-semaforo-contenedor 
+          [nivelLlenado]="c.nivel_llenado!" 
+          [bateria]="c.bateria!">
+        </app-semaforo-contenedor>
+      </div>
+    </div>
+    
+    <div class="col-12" *ngIf="contenedores.length === 0">
+      <div class="alert alert-info">No hay contenedores registrados o el backend no está encendido.</div>
+    </div>
+  </div>
+</div>
